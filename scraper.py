@@ -43,6 +43,8 @@ def getLastID():
 		lastID = int(open(lastIDPath, 'r').read())
 		print "Loaded last ID as", lastID
 		return lastID
+	else:
+		return 0
 
 def saveLastID():
 	open(lastIDPath, 'w').write(str(lastID))
@@ -56,7 +58,7 @@ def getMaxID():
 		print "Newest post is #" + str(maxID)
 		return maxID
 	except Exception as e:
-		return 80000
+		return 100000
 	
 
 def getData(id):
@@ -99,7 +101,17 @@ while True:
 		for i in range(start,end+1):
 			lastTime = time.clock()
 			print "Saving comments for post #" + str(i) + "... ",
-			saveData(getData(i),i)
+			
+			gotData = ""
+			while (gotData == ""):
+				try:
+					gotData = getData(i)
+				except KeyboardInterrupt:
+					break;
+				except:
+					gotData = ""
+					print("exception after getData")
+			saveData(gotData,i)
 			print "done in",
 			print str(round(time.clock()-lastTime, 2))+"s"
 			lastID = i
