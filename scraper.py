@@ -99,7 +99,7 @@ while True:
 	postCounter = 0
 	try:
 		for i in range(start,end+1):
-			lastTime = time.clock()
+			lastTime = time.time()
 			print "Saving comments for post #" + str(i) + "... ",
 			
 			gotData = ""
@@ -113,7 +113,7 @@ while True:
 					print("exception after getData")
 			saveData(gotData,i)
 			print "done in",
-			print str(round(time.clock()-lastTime, 2))+"s"
+			print str(round(time.time()-lastTime, 2))+"s"
 			lastID = i
 			postCounter+=1
 			if postCounter >= saveEvery:
